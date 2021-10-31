@@ -1,10 +1,10 @@
-package com.ewake.restclient.model
+package com.ewake.restclient.presentation.model
 
 /**
  * @author Nikolaevsky Dmitry (@d.nikolaevskiy)
  */
 
-data class ResponseRequestModel(
+data class RequestResponseModel(
     var id: Int? = null,
     var request: RequestModel,
     var response: ResponseModel
@@ -13,8 +13,8 @@ data class ResponseRequestModel(
 data class RequestModel(
     var method: RequestMethod,
     var url: String = "",
-    var headers: MutableMap<String, String> = mutableMapOf(),
-    var query: MutableMap<String, String> = mutableMapOf(),
+    var headers: MutableList<Pair<String, String>> = mutableListOf(),
+    var query: MutableList<Pair<String, String>> = mutableListOf(),
     var body: String = ""
 )
 
