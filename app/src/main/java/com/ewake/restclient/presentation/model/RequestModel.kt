@@ -6,12 +6,12 @@ package com.ewake.restclient.presentation.model
 
 data class RequestResponseModel(
     var id: Int? = null,
-    var request: RequestModel,
-    var response: ResponseModel
+    var request: RequestModel = RequestModel(),
+    var response: ResponseModel = ResponseModel()
 )
 
 data class RequestModel(
-    var method: RequestMethod,
+    var method: RequestMethod = RequestMethod.GET,
     var url: String = "",
     var headers: MutableList<Pair<String, String>> = mutableListOf(),
     var query: MutableList<Pair<String, String>> = mutableListOf(),
@@ -19,9 +19,9 @@ data class RequestModel(
 )
 
 data class ResponseModel(
-    var code: Int,
-    var message: String,
-    var body: String
+    var code: Int = 0,
+    var message: String = "",
+    var body: String = ""
 )
 
 enum class RequestMethod {

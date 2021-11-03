@@ -64,6 +64,11 @@ class KeyValueAdapter : RecyclerView.Adapter<KeyValueAdapter.KeyValueViewHolder>
         notifyItemInserted(items.size)
     }
 
+    fun removeAt(position: Int) {
+        items.removeAt(position)
+        notifyItemRemoved(position)
+    }
+
     override fun getItemCount(): Int = items.size
 
     fun interface OnKeyValueDataChangedListener {
