@@ -6,9 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.ewake.restclient.databinding.FragmentMainPageBinding
 import com.ewake.restclient.presentation.model.RequestModel
+import com.ewake.restclient.presentation.model.RequestResponseModel
 import com.ewake.restclient.presentation.model.ResponseModel
+import com.ewake.restclient.presentation.ui.fragment.mainpage.adapter.RequestsAdapter
 import com.ewake.restclient.presentation.ui.view.requestresponse.RequestResponseView
 import com.ewake.restclient.presentation.viewmodel.mainpage.MainPageViewModel
 import com.google.android.material.snackbar.Snackbar
@@ -26,6 +29,8 @@ class MainPageFragment : Fragment(), RequestResponseView.OnSendRequestClickListe
 
     private val viewModel by viewModels<MainPageViewModel>()
 
+    private val requestsAdapter = RequestsAdapter()
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -33,9 +38,22 @@ class MainPageFragment : Fragment(), RequestResponseView.OnSendRequestClickListe
     ): View {
         _binding = FragmentMainPageBinding.inflate(inflater, container, false)
 
+        binding.apply {
+            requests.apply {
+                layoutManager =
+                    LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+                adapter = requestsAdapter.apply {
+                    onItemClickListener = viewModel::onItemClicked
+                }
+            }
+        }
+
         viewModel.apply {
             messageLiveData.observe(viewLifecycleOwner, ::showMessage)
             responseLiveData.observe(viewLifecycleOwner, ::setResponse)
+            requestsLiveData.observe(viewLifecycleOwner, ::setRequests)
+            currentRequestResponseLiveData.observe(viewLifecycleOwner, ::setCurrentModel)
+            start()
         }
 
         binding.requestResponse.onSendClickListener = this
@@ -58,5 +76,13 @@ class MainPageFragment : Fragment(), RequestResponseView.OnSendRequestClickListe
 
     override fun onSend(requestModel: RequestModel) {
         viewModel.onSendClicked(requestModel)
+    }
+
+    private fun setRequests(list: List<RequestResponseModel>) {
+        requestsAdapter.items = list
+    }
+
+    private fun setCurrentModel(model: RequestResponseModel) {
+        binding.requestResponse.model = model
     }
 }

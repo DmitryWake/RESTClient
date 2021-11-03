@@ -122,7 +122,7 @@ class RequestResponseView @JvmOverloads constructor(
 
     private fun notifyResponseChanged() {
         binding.apply {
-            code.text = "${model.response.code.toString()} ${model.response.message}"
+            code.text = "${model.response.code} ${model.response.message}"
             responseBody.setText(model.response.body)
         }
     }

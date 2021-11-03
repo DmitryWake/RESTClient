@@ -1,11 +1,16 @@
 package com.ewake.restclient.presentation.di.hilt
 
+import android.content.Context
+import androidx.room.Room
+import com.ewake.restclient.data.db.room.AppDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import javax.inject.Singleton
 
 /**
  * @author Nikolaevsky Dmitry (@d.nikolaevskiy)
@@ -14,6 +19,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 @InstallIn(SingletonComponent::class)
 class AppModule {
     @Provides
+    @Singleton
     fun provideOkHttp(): OkHttpClient {
         val builder = OkHttpClient.Builder()
 
@@ -24,4 +30,9 @@ class AppModule {
 
         return builder.build()
     }
+
+    @Provides
+    @Singleton
+    fun provideAppDatabase(@ApplicationContext context: Context) =
+        Room.databaseBuilder(context, AppDatabase::class.java, "database.db").build()
 }
