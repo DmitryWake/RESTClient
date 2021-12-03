@@ -14,6 +14,12 @@ interface RequestResponseDao {
     @Query("SELECT * FROM RequestResponseEntity")
     suspend fun getAll(): List<RequestResponseEntity>
 
+    @Query("SELECT * FROM RequestResponseEntity WHERE scriptId IS NULL")
+    suspend fun getAllFromHistory(): List<RequestResponseEntity>
+
+    @Query("SELECT * FROM RequestResponseEntity WHERE scriptId LIKE :scriptId")
+    suspend fun getFromScript(scriptId: Int): List<RequestResponseEntity>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(entity: RequestResponseEntity)
 }

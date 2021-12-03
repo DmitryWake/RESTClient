@@ -7,7 +7,8 @@ package com.ewake.restclient.presentation.model
 data class RequestResponseModel(
     var id: Int? = null,
     var request: RequestModel = RequestModel(),
-    var response: ResponseModel = ResponseModel()
+    var response: ResponseModel = ResponseModel(),
+    var isScript: Boolean = false
 )
 
 data class RequestModel(
@@ -27,9 +28,3 @@ data class ResponseModel(
 enum class RequestMethod {
     GET, POST
 }
-
-data class ScriptModel(
-    var id: Int? = null,
-    var name: String = "",
-    var itemsId: List<Int> = listOf()
-)
