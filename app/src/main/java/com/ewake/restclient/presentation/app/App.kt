@@ -8,5 +8,5 @@ import javax.inject.Inject
  * @author Nikolaevsky Dmitry (@d.nikolaevskiy)
  */
 @HiltAndroidApp
-class App @Inject constructor() : Application() {
+class App: Application() {
 }

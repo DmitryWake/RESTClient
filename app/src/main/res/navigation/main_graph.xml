@@ -2,10 +2,17 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/main_graph"
-    app:startDestination="@id/mainPageFragment2">
+    app:startDestination="@id/mainPageFragment">
 
     <fragment
-        android:id="@+id/mainPageFragment2"
+        android:id="@+id/mainPageFragment"
         android:name="com.ewake.restclient.presentation.ui.fragment.mainpage.MainPageFragment"
         android:label="MainPageFragment" />
+
+    <fragment
+        android:id="@+id/scriptListFragment"
+        android:name="com.ewake.restclient.presentation.ui.fragment.scriptlist.ScriptListFragment"
+        android:label="ScriptListFragment" />
+
+
 </navigation>

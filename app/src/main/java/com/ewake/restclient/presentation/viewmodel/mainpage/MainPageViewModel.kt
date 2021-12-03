@@ -1,5 +1,6 @@
 package com.ewake.restclient.presentation.viewmodel.mainpage
 
+import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -26,7 +27,7 @@ import javax.inject.Inject
  */
 @HiltViewModel
 class MainPageViewModel @Inject constructor(
-    app: App,
+    app: Application,
     database: AppDatabase,
     private val httpClient: OkHttpClient,
     private val mapper: RequestResponseMapper
