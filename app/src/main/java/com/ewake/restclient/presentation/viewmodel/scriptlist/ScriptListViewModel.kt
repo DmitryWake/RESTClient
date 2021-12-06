@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.ewake.restclient.data.db.room.AppDatabase
 import com.ewake.restclient.data.db.room.entity.ScriptEntity
 import com.ewake.restclient.presentation.extensions.toLiveData
+import com.ewake.restclient.presentation.ui.fragment.scriptlist.ScriptListFragmentDirections
 import com.ewake.restclient.presentation.utils.SingleEventLiveData
 import com.ewake.restclient.presentation.viewmodel.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -49,7 +50,7 @@ class ScriptListViewModel @Inject constructor(
     }
 
     fun onItemClicked(scriptModel: ScriptEntity) {
-        _messageLiveData.postValue("Clicked")
+        _navigationLiveData.postValue(ScriptListFragmentDirections.actionScriptListFragmentToScriptDetailFragment(scriptModel.id!!))
     }
 
     fun onDeleteItemClicked(scriptModel: ScriptEntity) {

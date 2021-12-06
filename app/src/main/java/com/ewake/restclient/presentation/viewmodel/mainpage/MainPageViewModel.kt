@@ -65,7 +65,7 @@ class MainPageViewModel @Inject constructor(
     }
 
     private suspend fun loadData() {
-        val list = mapper.entityListToModelList(requestResponseDao.getAll())
+        val list = mapper.entityListToModelList(requestResponseDao.getAllFromHistory())
 
         _requestsLiveData.postValue(list)
     }

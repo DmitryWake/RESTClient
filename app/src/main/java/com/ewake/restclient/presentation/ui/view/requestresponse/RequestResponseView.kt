@@ -31,20 +31,20 @@ class RequestResponseView @JvmOverloads constructor(
 
     var model: RequestResponseModel = RequestResponseModel()
         set(value) {
-            field = value
+            field = value.copy()
             notifyDataChanged()
         }
 
     var response: ResponseModel
         set(value) {
-            model.response = value
+            model.response = value.copy()
             notifyResponseChanged()
         }
         get() = model.response
 
     var request: RequestModel
         set(value) {
-            model.request = value
+            model.request = value.copy()
             notifyRequestChanged()
         }
         get() = model.request

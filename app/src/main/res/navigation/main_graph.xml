@@ -12,7 +12,20 @@
     <fragment
         android:id="@+id/scriptListFragment"
         android:name="com.ewake.restclient.presentation.ui.fragment.scriptlist.ScriptListFragment"
-        android:label="ScriptListFragment" />
+        android:label="ScriptListFragment" >
+        <action
+            android:id="@+id/action_scriptListFragment_to_scriptDetailFragment"
+            app:destination="@id/scriptDetailFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/scriptDetailFragment"
+        android:name="com.ewake.restclient.presentation.ui.fragment.scriptdetail.ScriptDetailFragment"
+        android:label="ScriptDetailFragment" >
+        <argument
+            android:name="scriptId"
+            app:argType="integer" />
+    </fragment>
 
 
 </navigation>

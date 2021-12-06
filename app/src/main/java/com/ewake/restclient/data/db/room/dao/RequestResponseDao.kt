@@ -1,9 +1,6 @@
 package com.ewake.restclient.data.db.room.dao
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import com.ewake.restclient.data.db.room.entity.RequestResponseEntity
 
 /**
@@ -22,4 +19,7 @@ interface RequestResponseDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(entity: RequestResponseEntity)
+
+    @Delete
+    suspend fun delete(entity: RequestResponseEntity)
 }

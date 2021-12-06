@@ -60,7 +60,8 @@ class KeyValueAdapter : RecyclerView.Adapter<KeyValueAdapter.KeyValueViewHolder>
     }
 
     fun addItem(pair: Pair<String, String>) {
-        items.add(pair)
+        if (!items.contains(pair))
+            items.add(pair)
         notifyItemInserted(items.size)
     }
 
