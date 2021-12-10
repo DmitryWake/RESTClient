@@ -117,4 +117,18 @@ class MainPageViewModel @Inject constructor(
             _messageLiveData.postValue(t.message)
         }
     }
+
+    fun onSearchQueryChanged(query: String?) {
+        if (query == null) {
+            viewModelScope.launch { loadData() }
+        } else {
+            viewModelScope.launch { loadDataWithQuery("%$query%") }
+        }
+    }
+
+    private suspend fun loadDataWithQuery(query: String) {
+        val list = mapper.entityListToModelList(requestResponseDao.getFromHistory(query))
+
+        _requestsLiveData.postValue(list)
+    }
 }

@@ -14,6 +14,9 @@ interface RequestResponseDao {
     @Query("SELECT * FROM RequestResponseEntity WHERE scriptId IS NULL")
     suspend fun getAllFromHistory(): List<RequestResponseEntity>
 
+    @Query("SELECT * FROM RequestResponseEntity WHERE (url LIKE :searchQuery OR code LIKE :searchQuery OR method LIKE :searchQuery) AND scriptId is NULL ")
+    suspend fun getFromHistory(searchQuery: String): List<RequestResponseEntity>
+
     @Query("SELECT * FROM RequestResponseEntity WHERE scriptId LIKE :scriptId")
     suspend fun getFromScript(scriptId: Int): List<RequestResponseEntity>
 
