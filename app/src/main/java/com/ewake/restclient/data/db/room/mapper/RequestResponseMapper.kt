@@ -25,7 +25,8 @@ class RequestResponseMapper @Inject constructor() {
                 code = entity.code,
                 message = entity.message,
                 body = entity.responseBody
-            )
+            ),
+            scriptId = entity.scriptId
         )
     }
 
@@ -39,7 +40,8 @@ class RequestResponseMapper @Inject constructor() {
             body = model.request.body,
             code = model.response.code,
             message = model.response.message,
-            responseBody = model.response.body
+            responseBody = model.response.body,
+            scriptId = model.scriptId
         )
     }
 

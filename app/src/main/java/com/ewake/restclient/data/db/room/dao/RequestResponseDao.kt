@@ -22,4 +22,7 @@ interface RequestResponseDao {
 
     @Delete
     suspend fun delete(entity: RequestResponseEntity)
+
+    @Update
+    suspend fun update(entity: RequestResponseEntity)
 }

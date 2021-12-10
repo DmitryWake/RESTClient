@@ -10,6 +10,7 @@ import com.ewake.restclient.databinding.FragmentScriptDetailBinding
 import com.ewake.restclient.presentation.model.RequestResponseModel
 import com.ewake.restclient.presentation.ui.fragment.scriptdetail.adapter.ScriptViewPagerAdapter
 import com.ewake.restclient.presentation.viewmodel.scriptdetail.ScriptDetailViewModel
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -39,11 +40,14 @@ class ScriptDetailFragment : Fragment() {
 
         binding.viewPager.adapter = viewPagerAdapter
 
+        viewPagerAdapter.onRequestSendClickListener = viewModel::onSendRequestClicked
+
         viewModel.apply {
             start()
             listLiveData.observe(viewLifecycleOwner, ::setData)
             addLiveData.observe(viewLifecycleOwner, ::addItem)
             deleteItemLiveData.observe(viewLifecycleOwner, ::deleteItem)
+            messageLiveData.observe(viewLifecycleOwner, ::showMessage)
         }
 
         return binding.root
@@ -55,6 +59,10 @@ class ScriptDetailFragment : Fragment() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.title) {
+            "Сохранить" -> {
+                viewModel.onSaveClicked(viewPagerAdapter.items)
+                true
+            }
             "Добавить" -> {
                 viewModel.onAddClicked()
                 true
@@ -80,9 +88,14 @@ class ScriptDetailFragment : Fragment() {
 
     private fun addItem(item: RequestResponseModel) {
         viewPagerAdapter.addItem()
+        binding.viewPager.setCurrentItem(viewPagerAdapter.items.size - 1, true)
     }
 
     private fun deleteItem(position: Int) {
         viewPagerAdapter.deleteItem(position)
+    }
+
+    private fun showMessage(message: String) {
+        Snackbar.make(binding.root, message, Snackbar.LENGTH_LONG).show()
     }
 }

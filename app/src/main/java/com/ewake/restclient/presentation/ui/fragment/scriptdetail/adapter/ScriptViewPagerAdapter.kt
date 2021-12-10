@@ -5,7 +5,11 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.ewake.restclient.databinding.ScriptViewPagerItemBinding
+import com.ewake.restclient.presentation.model.RequestMethod
+import com.ewake.restclient.presentation.model.RequestModel
 import com.ewake.restclient.presentation.model.RequestResponseModel
+import com.ewake.restclient.presentation.ui.view.requestresponse.RequestResponseView
+import com.google.android.material.slider.Slider
 
 class ScriptViewPagerAdapter : RecyclerView.Adapter<ScriptViewPagerAdapter.ScriptDataViewHolder>() {
 
@@ -16,8 +20,23 @@ class ScriptViewPagerAdapter : RecyclerView.Adapter<ScriptViewPagerAdapter.Scrip
             notifyDataSetChanged()
         }
 
+    var onRequestSendClickListener: ((id: Int, requestModel: RequestModel) -> Unit)? = null
+
     inner class ScriptDataViewHolder(private val binding: ScriptViewPagerItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
+
+        init {
+            binding.requestResponseContainer.onChangedListener =
+                RequestResponseView.OnModelChangedListener {
+                    items[adapterPosition] = it
+                }
+
+            binding.requestResponseContainer.onSendClickListener =
+                RequestResponseView.OnSendRequestClickListener {
+                    onRequestSendClickListener?.invoke(items[adapterPosition].id!!, it)
+                }
+
+        }
 
         fun bind(model: RequestResponseModel) {
             binding.requestResponseContainer.model = model

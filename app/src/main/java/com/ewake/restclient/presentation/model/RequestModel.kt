@@ -8,7 +8,7 @@ data class RequestResponseModel(
     var id: Int? = null,
     var request: RequestModel = RequestModel(),
     var response: ResponseModel = ResponseModel(),
-    var isScript: Boolean = false
+    var scriptId: Int? = null
 )
 
 data class RequestModel(

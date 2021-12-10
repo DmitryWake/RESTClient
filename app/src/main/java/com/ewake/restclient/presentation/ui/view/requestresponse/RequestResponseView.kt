@@ -4,8 +4,6 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.ArrayAdapter
-import android.widget.LinearLayout
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.widget.NestedScrollView
 import androidx.core.widget.doAfterTextChanged
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -50,6 +48,7 @@ class RequestResponseView @JvmOverloads constructor(
         get() = model.request
 
     var onSendClickListener: OnSendRequestClickListener? = null
+    var onChangedListener: OnModelChangedListener? = null
 
     private val headersAdapter = KeyValueAdapter()
     private val queryAdapter = KeyValueAdapter()
@@ -64,11 +63,13 @@ class RequestResponseView @JvmOverloads constructor(
     private val onHeadersDataChangedListener =
         KeyValueAdapter.OnKeyValueDataChangedListener { position, data ->
             model.request.headers[position] = data
+            onChangedListener?.onChanged(model)
         }
 
     private val onQueryDataChangedListener =
         KeyValueAdapter.OnKeyValueDataChangedListener { position, data ->
             model.request.query[position] = data
+            onChangedListener?.onChanged(model)
         }
 
     private val onHeaderItemTouchHelper =
@@ -84,6 +85,7 @@ class RequestResponseView @JvmOverloads constructor(
                     binding.root.requestFocus()
                     headersAdapter.removeAt(this)
                     model.request.headers.removeAt(this)
+                    onChangedListener?.onChanged(model)
                 }
             }
 
@@ -102,6 +104,7 @@ class RequestResponseView @JvmOverloads constructor(
                     binding.root.requestFocus()
                     queryAdapter.removeAt(this)
                     model.request.query.removeAt(this)
+                    onChangedListener?.onChanged(model)
                 }
             }
 
@@ -150,21 +153,30 @@ class RequestResponseView @JvmOverloads constructor(
                     model.request.query.add(this)
                     queryAdapter.addItem(this)
                 }
+                onChangedListener?.onChanged(model)
             }
             addHeader.setOnClickListener {
                 with("" to "") {
                     model.request.headers.add(this)
                     headersAdapter.addItem(this)
                 }
+                onChangedListener?.onChanged(model)
             }
 
             send.setOnClickListener { onSendClickListener?.onSend(model.request) }
 
-            url.doAfterTextChanged { model.request.url = it.toString() }
-            body.doAfterTextChanged { model.request.body = it.toString() }
+            url.doAfterTextChanged {
+                model.request.url = it.toString()
+                onChangedListener?.onChanged(model)
+            }
+            body.doAfterTextChanged {
+                model.request.body = it.toString()
+                onChangedListener?.onChanged(model)
+            }
 
             method.setOnItemClickListener { _, _, i, _ ->
                 request.method = RequestMethod.values()[i]
+                onChangedListener?.onChanged(model)
             }
         }
     }
@@ -192,5 +204,9 @@ class RequestResponseView @JvmOverloads constructor(
 
     fun interface OnSendRequestClickListener {
         fun onSend(requestModel: RequestModel)
+    }
+
+    fun interface OnModelChangedListener {
+        fun onChanged(model: RequestResponseModel)
     }
 }
