@@ -52,7 +52,6 @@ class ScriptListFragment : Fragment() {
         }
 
         viewModel.apply {
-            start()
             navigationLiveData.observe(viewLifecycleOwner, ::navigate)
             messageLiveData.observe(viewLifecycleOwner, ::showMessage)
             onItemAddLiveData.observe(viewLifecycleOwner, ::addItem)
@@ -61,6 +60,11 @@ class ScriptListFragment : Fragment() {
         }
 
         return binding.root
+    }
+
+    override fun onStart() {
+        super.onStart()
+        viewModel.refresh()
     }
 
     override fun onDestroyView() {

@@ -32,12 +32,6 @@ class ScriptListViewModel @Inject constructor(
 
     private var data: MutableList<ScriptEntity> = mutableListOf()
 
-    override fun onStart() {
-        viewModelScope.launch {
-            loadData()
-        }
-    }
-
     private suspend fun loadData() {
         data = dao.getAll().toMutableList()
         _scriptListLiveData.postValue(data)
@@ -64,6 +58,12 @@ class ScriptListViewModel @Inject constructor(
             dao.insert(ScriptEntity(name = "Новый сценарий"))
             data = dao.getAll().toMutableList()
             _onItemAddLiveData.postValue(data.last())
+        }
+    }
+
+    fun refresh() {
+        viewModelScope.launch {
+            loadData()
         }
     }
 }

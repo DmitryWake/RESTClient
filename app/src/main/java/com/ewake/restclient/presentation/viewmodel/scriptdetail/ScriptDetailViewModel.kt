@@ -40,6 +40,7 @@ class ScriptDetailViewModel @Inject constructor(
     val addLiveData = _addLiveData.toLiveData()
 
     private val dao = appDatabase.requestResponseDao()
+    private val scriptDao = appDatabase.scriptDao()
 
     private var list = mutableListOf<RequestResponseModel>()
 
@@ -138,6 +139,14 @@ class ScriptDetailViewModel @Inject constructor(
             }
         } catch (t: Throwable) {
             _messageLiveData.postValue(t.message)
+        }
+    }
+
+    fun onScriptRenameClicked(name: String) {
+        viewModelScope.launch {
+            val script = scriptId?.let { scriptDao.getById(it) }
+            script?.name = name
+            script?.let { scriptDao.update(it) }
         }
     }
 }

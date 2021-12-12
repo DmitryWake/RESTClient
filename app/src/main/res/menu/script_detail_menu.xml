@@ -11,7 +11,12 @@
         android:icon="@drawable/ic_add" />
 
     <item
-        android:id="@+id/scriptListFragment"
+        android:id="@+id/delete"
         android:title="Удалить выбранный"
+        android:icon="@drawable/ic_delete" />
+
+    <item
+        android:id="@+id/rename"
+        android:title="Переименовать сценарий"
         android:icon="@drawable/ic_delete" />
 </menu>

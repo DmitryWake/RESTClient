@@ -8,13 +8,14 @@ import androidx.navigation.fragment.navArgs
 import com.ewake.restclient.R
 import com.ewake.restclient.databinding.FragmentScriptDetailBinding
 import com.ewake.restclient.presentation.model.RequestResponseModel
+import com.ewake.restclient.presentation.ui.dialog.RenameDialog
 import com.ewake.restclient.presentation.ui.fragment.scriptdetail.adapter.ScriptViewPagerAdapter
 import com.ewake.restclient.presentation.viewmodel.scriptdetail.ScriptDetailViewModel
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class ScriptDetailFragment : Fragment() {
+class ScriptDetailFragment : Fragment(), RenameDialog.OnPositiveClickListener {
 
     private var _binding: FragmentScriptDetailBinding? = null
     private val binding: FragmentScriptDetailBinding
@@ -71,6 +72,10 @@ class ScriptDetailFragment : Fragment() {
                 viewModel.onDeleteClicked(binding.viewPager.currentItem)
                 true
             }
+            "Переименовать сценарий" -> {
+                RenameDialog.Builder().setOnPositiveClickListener(this).build().show(childFragmentManager, "RenameDialog")
+                true
+            }
             else -> {
                 false
             }
@@ -97,5 +102,9 @@ class ScriptDetailFragment : Fragment() {
 
     private fun showMessage(message: String) {
         Snackbar.make(binding.root, message, Snackbar.LENGTH_LONG).show()
+    }
+
+    override fun onClick(name: String) {
+        viewModel.onScriptRenameClicked(name)
     }
 }

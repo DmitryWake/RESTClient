@@ -9,6 +9,12 @@ interface ScriptDao {
     @Query("SELECT * FROM ScriptEntity")
     suspend fun getAll(): List<ScriptEntity>
 
+    @Query("SELECT * FROM ScriptEntity WHERE id LIKE :id LIMIT 1")
+    suspend fun getById(id: Int): ScriptEntity?
+
+    @Update
+    suspend fun update(scriptEntity: ScriptEntity)
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(scriptEntity: ScriptEntity)
 
