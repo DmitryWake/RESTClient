@@ -1,0 +1,56 @@
+<ISSPECS>
+	<DESCRIPTION>
+		<TITLE>Android REST Client</TITLE>
+		<SUBJ>Mobile, REST, QA, Development</SUBJ>
+	</DESCRIPTION>
+	<DATA>
+		<ENTITY ent_id="ScriptEntity">
+			<PROPERTY>id</PROPERTY>
+			<PROPERTY>name</PROPERTY>
+		</ENTITY>
+		<ENTITY ent_id="ResponseRequestEntity">
+			<PROPERTY>id</PROPERTY>
+			<PROPERTY>method</PROPERTY>
+			<PROPERTY>url</PROPERTY>
+			<PROPERTY>headers</PROPERTY>
+			<PROPERTY>query</PROPERTY>
+			<PROPERTY>body</PROPERTY>
+			<PROPERTY>code</PROPERTY>
+			<PROPERTY>message</PROPERTY>
+			<PROPERTY>responseBody</PROPERTY>
+			<PROPERTY>scriptId</PROPERTY>
+		</ENTITY>
+		<RELATIONSHIPS ent_ids = "ResponseRequestEntity ScriptEntity">
+			<PROPERTY>MANY TO ONE</PROPERTY>
+		</RELATIONSHIPS>
+		<CONSTRAINT> Между таблицами ResponseRequestEntiry и ScriptEntity построено отношение многие к одному </CONSTRAINT>
+		<CONSTRAINT> Ограничение NOT NULL почти повсеместно, так как изначально генерируем пустые данные ("", 0 и т.д.) </CONSTRAINT>
+		<CONSTRAINT> ResponseRequestEntity не обязательно должно быть прикреплено к определенному ScriptEntity </CONSTRAINT>
+	</DATA>
+	<ROLES>
+		<ROLE>
+			<TITLE>User</TITLE>
+			<RESPOSIBILITY>Создание и изменение моделей запрос-ответ</RESPOSIBILITY>
+			<RESPOSIBILITY>Выполнение созданных запросов</RESPOSIBILITY>
+			<RESPOSIBILITY>Создание, изменение, удаление сценариев</RESPOSIBILITY>
+			<RESPOSIBILITY>Создание, изменение, удаление моделей запрос-ответ, прикрепленных к сценарию </RESPOSIBILITY>
+			<TOTALUSERS>NOT LIMITED</TOTALUSERS>
+		</ROLE>
+	</ROLES>
+	<TECHSPEC>
+		<TYPE>Clean Architecture</TYPE>
+		<DEVTOOLS>
+			<DEV>Kotlin</DEV>
+			<DEV>Android SDK</DEV>
+			<DEV>OkHttpClient</DEV>
+			<DEV>Dependency Injection (Hilt)</DEV>
+			<DEV>Retrofit</DEV>
+			<DEV>ORM Room</DEV>
+		</DEVTOOLS>
+		<DBMS>
+			<TITLE>SQLite</TITLE>
+			<VERSION>3.37.0</VERSION>
+			<REASONING>SQLite - основная БД, использующаяся в системе Android. Рекомендована компанией Google вместе с ORM системой Room</REASONING>
+		</DBMS>
+	</TECHSPEC>
+</ISSPECS>
